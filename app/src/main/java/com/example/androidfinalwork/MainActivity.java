@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.w3c.dom.ls.LSOutput;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private MsgAdapter adapter;
     private boolean Send = true;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
                     Msg msg;
                     if (Send) {
                         msg = new Msg(content, Msg.TYPE_SEND);
+                        System.out.println("asdasd");
                     } else {
                         msg = new Msg(content, Msg.TYPE_RECEIVED);
                     }
