@@ -21,6 +21,7 @@ public class XiaoIce {
 
     private void run() throws IOException, DemoException {
         // 此处2次urlencode， 确保特殊字符被正确编码
+
         String params = "text=" + ConnUtil.urlEncode(ConnUtil.urlEncode("今天天气怎样"));
         params += "&type=" + "text";
         String URL = url + "?" + params;
