@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.w3c.dom.ls.LSOutput;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private MsgAdapter adapter;
     private boolean Send = true;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         System.out.println("this  is main branch ");
@@ -29,7 +32,9 @@ public class MainActivity extends AppCompatActivity {
         editText = (EditText) findViewById(R.id.input_text);
         button = (Button) findViewById(R.id.send);
         recyclerView = (RecyclerView) findViewById(R.id.msg_recycler_view);
-        adapter = new MsgAdapter(msgList);
+
+//        adapter = new MsgAdapter(msgList);
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
@@ -41,11 +46,14 @@ public class MainActivity extends AppCompatActivity {
                     Msg msg;
                     if (Send) {
                         msg = new Msg(content, Msg.TYPE_SEND);
+                        System.out.println("asdasd");
                     } else {
                         msg = new Msg(content, Msg.TYPE_RECEIVED);
                     }
                     Send = !Send;
-                    msgList.add(msg);
+
+//                    msgList.add(msg);
+
                     adapter.notifyItemInserted(msgList.size() - 1);
                     recyclerView.scrollToPosition(msgList.size() - 1);
                     editText.setText("");
