@@ -159,7 +159,7 @@ public class AsrMain {
         return result;
     }
 
-    private byte[] getFileContent(String filename) throws DemoException, IOException {
+    public byte[] getFileContent(String filename) throws DemoException, IOException {
         File file = new File(filename);
         if (!file.canRead()) {
             System.err.println("文件不存在或者不可读: " + file.getAbsolutePath());
@@ -181,7 +181,7 @@ public class AsrMain {
 
     }
 
-    private String base64Encode(byte[] content) {
+    public String base64Encode(byte[] content) {
         /**
          Base64.Encoder encoder = Base64.getEncoder(); // JDK 1.8  推荐方法
          String str = encoder.encodeToString(content);

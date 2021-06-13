@@ -22,7 +22,7 @@ public class XiaoIce {
     private void run() throws IOException, DemoException {
         // 此处2次urlencode， 确保特殊字符被正确编码
 
-        String params = "text=" + ConnUtil.urlEncode(ConnUtil.urlEncode("今天天气怎样"));
+        String params = "text=" + ConnUtil.urlEncode(ConnUtil.urlEncode("你叫什么名字"));
         params += "&type=" + "text";
         String URL = url + "?" + params;
         System.out.println(url + "?" + params); // 反馈请带上此url，浏览器上可以测试
