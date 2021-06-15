@@ -49,11 +49,11 @@ public class BeautyScore {
         conn.setDoOutput(true);
 //        conn.getOutputStream().write(params.toString().getBytes());
         conn.getOutputStream().close();
-        System.out.println("conntostring");
-        System.out.println(conn.getResponseCode());
+//        System.out.println(conn.getResponseCode());
 //        System.out.println(conn.getErrorStream());
 //        System.out.println(conn.getResponseCode());
         String result = ConnUtil.getResponseString(conn);
+        System.out.println("conntostring");
 //        System.out.println(result);
 //        String result="{\"text\":\"a\",\"score\":\"b\"}";
         JSONObject resultJson= JSONObject.parseObject(result);

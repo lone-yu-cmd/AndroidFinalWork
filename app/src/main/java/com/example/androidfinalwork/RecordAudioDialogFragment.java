@@ -37,11 +37,6 @@ import androidx.fragment.app.DialogFragment;
 
 import java.io.File;
 
-/**
- * 开始录音的 DialogFragment
- *
- * Created by developerHaoz on 2017/8/12.
- */
 
 public class RecordAudioDialogFragment extends DialogFragment {
 
@@ -68,7 +63,24 @@ public class RecordAudioDialogFragment extends DialogFragment {
         return dialogFragment;
     }
 
+    //创造服务链接器 便于使用服务内部的方法
+    private ServiceConnection serviceConnection=new ServiceConnection() {
+        //        连接时候启动的方法
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+//            连接服务时候就会生命localBinder
+            localBinder = (RecordingService.LocalBinder) service;
+            System.out.println("declare service-------------------------------------------------");
+            isConnected = true;
+        }
 
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+
+            System.out.println("declare service defalut-------------------------------------------------");
+            isConnected = false;
+        }
+    };
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -130,8 +142,7 @@ public class RecordAudioDialogFragment extends DialogFragment {
 
     //开始录音
     private void onRecord(boolean start) {
-
-        Intent intent = new Intent(getActivity(), RecordingService.class);
+        Intent intent = new Intent(this.getActivity(), RecordingService.class);
 
 
         if (start) {
@@ -149,16 +160,16 @@ public class RecordAudioDialogFragment extends DialogFragment {
             mChronometerTime.setBase(SystemClock.elapsedRealtime());
             mChronometerTime.start();
 
-            System.out.println("intent start");
             //start RecordingService 启动服务
             getActivity().startService(intent);
             //绑定该类和服务之间的关系
-            bindService(intent,serviceConnection, Context.BIND_AUTO_CREATE);
+            //TODO 不走这一步！
+            getActivity().bindService(intent,serviceConnection, Context.BIND_AUTO_CREATE);
             //keep screen on while recording
-            System.out.println("intent start2");
 
+            //        启动服务
+            localBinder.startRecording();
             getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
 
         } else {
             //stop recording
@@ -172,21 +183,12 @@ public class RecordAudioDialogFragment extends DialogFragment {
             //allow the screen to turn off again once recording is finished
             getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         }
+        System.out.println("intent start4");
+
     }
 
-    //创造服务链接器 便于使用服务内部的方法
-    private ServiceConnection serviceConnection=new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-            localBinder = (RecordingService.LocalBinder) service;
-            isConnected = true;
-        }
 
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-            isConnected = false;
-        }
-    };
+
 
     public void setOnCancelListener(OnAudioCancelListener listener) {
         this.mListener = listener;
@@ -199,6 +201,7 @@ public class RecordAudioDialogFragment extends DialogFragment {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED
                         && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                     onRecord(mStartRecording);
+                    System.out.println("intent start5");
                 }
                 break;
         }

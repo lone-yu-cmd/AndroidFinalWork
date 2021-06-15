@@ -13,16 +13,16 @@ import java.net.URL;
 
 public class XiaoIce {
     public static void main(String[] args) throws IOException, DemoException {
-        (new XiaoIce()).run();
+        (new XiaoIce()).run("小冰你好");
     }
 
 //    public final String url = "http://tsn.baidu.com/text2audio"; // 可以使用https
     public final String url = "http://112.74.185.224:6789/chat"; // 可以使用https
 
-    private void run() throws IOException, DemoException {
+    public synchronized String run(String text) throws IOException, DemoException {
         // 此处2次urlencode， 确保特殊字符被正确编码
 
-        String params = "text=" + ConnUtil.urlEncode(ConnUtil.urlEncode("你叫什么名字"));
+        String params = "text=" + ConnUtil.urlEncode(ConnUtil.urlEncode(text));
         params += "&type=" + "text";
         String URL = url + "?" + params;
         System.out.println(url + "?" + params); // 反馈请带上此url，浏览器上可以测试
@@ -30,8 +30,10 @@ public class XiaoIce {
         conn.setDoInput(true);
         conn.setDoOutput(true);
         conn.setConnectTimeout(5000);
-        System.out.println(ConnUtil.getResponseString(conn));
-
+//        System.out.println(ConnUtil.getResponseString(conn));
+        String result =  ConnUtil.getResponseString(conn);
+        System.out.println(result);
+        return result;
     }
 
 }
