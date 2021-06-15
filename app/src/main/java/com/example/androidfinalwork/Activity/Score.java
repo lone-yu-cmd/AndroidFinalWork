@@ -17,6 +17,8 @@ import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.text.Editable;
@@ -29,11 +31,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
+import com.example.androidfinalwork.Msg;
 import com.example.androidfinalwork.R;
 import com.example.androidfinalwork.asr.com.baidu.speech.restapi.asrdemo.AsrMain;
 import com.example.androidfinalwork.asr.com.baidu.speech.restapi.common.ConnUtil;
 import com.example.androidfinalwork.asr.com.baidu.speech.restapi.common.DemoException;
 import com.example.androidfinalwork.xiaoice.BeautyScore;
+import com.example.androidfinalwork.xiaoice.XiaoIce;
 import com.xuexiang.xui.XUI;
 import com.xuexiang.xui.utils.WidgetUtils;
 import com.xuexiang.xui.widget.dialog.LoadingDialog;
@@ -185,17 +189,6 @@ public class Score extends AppCompatActivity {
     }
 
 
-
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        ImageView imageView = findViewById(R.id.imageView2);
-//        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-//            Bundle extras = data.getExtras();
-//            Bitmap imageBitmap = (Bitmap) extras.get("data");
-//            imageView.setImageBitmap(imageBitmap);
-//        }
-//    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         ImageView imageView = findViewById(R.id.imageView2);
@@ -252,6 +245,26 @@ public class Score extends AppCompatActivity {
 //            imageView.setImageBitmap(imageBitmap);
             if(data != null){
                 try {
+                    Handler mHandler = new Handler(){
+                        @Override
+                        public void handleMessage(Message msg) {
+                            switch (msg.what){
+                                case 1:
+                                    grade = ((JSONObject)msg.obj).getString("score");
+                                    remark = ((JSONObject)msg.obj).getString("text");
+                                    System.out.println(grade);
+                                    System.out.println(remark);
+                                    gradeTextView.setText(grade);
+                                    remarkTextView.setText(remark);
+                                    gradeTextView.setVisibility(View.VISIBLE);
+                                    remarkTextView.setVisibility(View.VISIBLE);
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                    };
+
                     mLoadingDialog.updateMessage("颜值评分中");
                     mLoadingDialog.setLoadingIcon(R.drawable.ic_baseline_person_pin_circle_24);
 //                    mLoadingDialog.show();
@@ -260,6 +273,39 @@ public class Score extends AppCompatActivity {
                      bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(data.getData()));
                     imageView.setImageBitmap(bitmap);
                     mLoadingDialog.show();
+
+                    BeautyScore beautyScore = new BeautyScore();
+                    try {
+                        String base = beautyScore.base64Encode(ConnUtil.getInputStreamContent(getContentResolver().openInputStream(getImageUri)));
+                        new Thread(new Runnable() {
+                            public void run() {
+
+                                try {
+                                    JSONObject result = beautyScore.run(base);
+                                    Message message = mHandler.obtainMessage();
+                                    message.what = 1;
+                                    //传递对象
+                                    message.obj = result;
+                                    mHandler.sendMessage(message);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                } catch (DemoException e) {
+                                    e.printStackTrace();
+                                }
+
+
+                            }}).start();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+
+
+
+
+
+
+
 //                    ConnUtil util = new ConnUtil(); //转码
 //                    BeautyScore beautyScore = new BeautyScore();
 //                    String base = beautyScore.base64Encode(ConnUtil.getInputStreamContent(getContentResolver().openInputStream(data.getData())));

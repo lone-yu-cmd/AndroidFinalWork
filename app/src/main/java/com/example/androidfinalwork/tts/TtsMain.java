@@ -1,5 +1,7 @@
 package com.example.androidfinalwork.tts;
 
+import android.os.Environment;
+
 import com.example.androidfinalwork.asr.com.baidu.speech.restapi.common.DemoException;
 import com.example.androidfinalwork.asr.com.baidu.speech.restapi.common.ConnUtil;
 import com.example.androidfinalwork.asr.com.baidu.speech.restapi.common.TokenHolder;
@@ -16,7 +18,7 @@ import java.util.Map;
 public class TtsMain {
 
     public static void main(String[] args) throws IOException, DemoException {
-        (new TtsMain()).run();
+        (new TtsMain()).run("欢迎使用百度语音2");
     }
 
     //  填写网页上申请的appkey 如 $apiKey="g8eBUMSokVB1BHGmgxxxxxx"
@@ -27,7 +29,7 @@ public class TtsMain {
 
     // text 的内容为"欢迎使用百度语音合成"的urlencode,utf-8 编码
     // 可以百度搜索"urlencode"
-    private final String text = "欢迎使用百度语音";
+//    private final String text = "欢迎使用百度语音";
 
     // 发音人选择, 基础音库：0为度小美，1为度小宇，3为度逍遥，4为度丫丫，
     // 精品音库：5为度小娇，103为度米朵，106为度博文，110为度小童，111为度小萌，默认为度小美
@@ -46,7 +48,7 @@ public class TtsMain {
 
     private String cuid = "1234567JAVA";
 
-    private void run() throws IOException, DemoException {
+    public void run(String text) throws IOException, DemoException {
 //        TokenHolder holder = new TokenHolder(appKey, secretKey, TokenHolder.ASR_SCOPE);
 //        holder.refresh();
 //        String token = holder.getToken();
@@ -74,7 +76,9 @@ public class TtsMain {
         if (contentType.contains("audio/")) {
             byte[] bytes = ConnUtil.getResponseBytes(conn);
             String format = getFormat(aue);
-            File file = new File("result." + format); // 打开mp3文件即可播放
+            File storageFile = Environment.getExternalStorageDirectory();
+
+            File file = new File(storageFile,"result." + format); // 打开mp3文件即可播放
             // System.out.println( file.getAbsolutePath());
             FileOutputStream os = new FileOutputStream(file);
             os.write(bytes);
