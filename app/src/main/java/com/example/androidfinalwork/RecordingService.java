@@ -80,7 +80,7 @@ public class RecordingService extends Service {
             mRecorder.prepare();
             mRecorder.start();
             mStartingTimeMillis = System.currentTimeMillis();
-        } catch (IOException e) {
+        } catch (Exception e) {
             Log.e(LOG_TAG, "prepare() failed");
         }
     }

@@ -1,6 +1,7 @@
 package com.example.androidfinalwork;
 
 import android.Manifest;
+import android.app.ActivityManager;
 import android.app.Dialog;
 import android.app.Service;
 import android.app.Service;
@@ -18,6 +19,7 @@ import android.os.Environment;
 //import android.support.v7.app.AlertDialog;
 import android.os.IBinder;
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Chronometer;
@@ -36,6 +38,7 @@ import androidx.fragment.app.DialogFragment;
 //import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.File;
+import java.util.List;
 
 
 public class RecordAudioDialogFragment extends DialogFragment {
@@ -64,7 +67,7 @@ public class RecordAudioDialogFragment extends DialogFragment {
     }
 
     //创造服务链接器 便于使用服务内部的方法
-    private ServiceConnection serviceConnection=new ServiceConnection() {
+    private ServiceConnection serviceConnection = new ServiceConnection() {
         //        连接时候启动的方法
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
@@ -112,11 +115,11 @@ public class RecordAudioDialogFragment extends DialogFragment {
                     System.out.println("没有权限申请权限");
                     ActivityCompat.requestPermissions(getActivity()
                             , new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO}, 1);
-                }else {
+                } else {
                     //有权限执行录音方法
                     System.out.println("有权限执行录音方法");
                     onRecord(mStartRecording);
-                mStartRecording = !mStartRecording;
+                    mStartRecording = !mStartRecording;
                 }
 
             }
@@ -164,12 +167,11 @@ public class RecordAudioDialogFragment extends DialogFragment {
             getActivity().startService(intent);
             //绑定该类和服务之间的关系
             //TODO 不走这一步！
-            getActivity().bindService(intent,serviceConnection, Context.BIND_AUTO_CREATE);
+            getActivity().getApplicationContext().bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
             //keep screen on while recording
-
-            //        启动服务
+            //启动服务
             localBinder.startRecording();
-            getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+//            getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         } else {
             //stop recording
@@ -186,8 +188,6 @@ public class RecordAudioDialogFragment extends DialogFragment {
         System.out.println("intent start4");
 
     }
-
-
 
 
     public void setOnCancelListener(OnAudioCancelListener listener) {
@@ -207,47 +207,30 @@ public class RecordAudioDialogFragment extends DialogFragment {
         }
     }
 
-
-    //https://blog.csdn.net/qq_38436214/article/details/103895751 的动态权限申请
-//    private void checkPermission() {
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//            String[] permissions = new String[]{Manifest.permission.RECORD_AUDIO,Manifest.permission.WRITE_EXTERNAL_STORAGE};
-//            for (String permission : permissions) {
-//                if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
-//                    ActivityCompat.requestPermissions(this, permissions, 200);
-//                    return;
-//                }
-//            }
-//        }
-//    }
-//
-//
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[]
-//            grantResults) {
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && requestCode == 200) {
-//            for (int i = 0; i < permissions.length; i++) {
-//                if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
-//                    Intent intent = new Intent();
-//                    intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-//                    Uri uri = Uri.fromParts("package", getPackageName(), null);
-//                    intent.setData(uri);
-//                    startActivityForResult(intent, 200);
-//                    return;
-//                }
-//            }
-//        }
-//    }
-//
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (resultCode == RESULT_OK && requestCode == 200) {
-//            checkPermission();
-//        }
-//    }
-
     public interface OnAudioCancelListener {
         void onCancel();
     }
+
+    //    检查服务是否启动
+//    public static boolean isServiceRunning(Context mContext, String className) {
+//
+//        boolean isRunning = false;
+//        ActivityManager activityManager = (ActivityManager) mContext
+//                .getSystemService(Context.ACTIVITY_SERVICE);
+//        List<ActivityManager.RunningServiceInfo> serviceList = activityManager
+//                .getRunningServices(30);
+//
+//        if (!(serviceList.size() > 0)) {
+//            return false;
+//        }
+//        Log.e("OnlineService：", className);
+//        for (int i = 0; i < serviceList.size(); i++) {
+//            Log.e("serviceName：", serviceList.get(i).service.getClassName());
+//            if (serviceList.get(i).service.getClassName().contains(className) == true) {
+//                isRunning = true;
+//                break;
+//            }
+//        }
+//        return isRunning;
+//    }\
 }
