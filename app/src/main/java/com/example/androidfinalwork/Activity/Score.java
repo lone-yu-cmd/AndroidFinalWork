@@ -279,9 +279,10 @@ public class Score extends AppCompatActivity {
 
                 } catch (FileNotFoundException  e) {
                     e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
                 }
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
 //                catch (DemoException e) {
 //                    e.printStackTrace();
 //                }

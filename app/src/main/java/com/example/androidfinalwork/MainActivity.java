@@ -18,7 +18,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     private List<Msg> msgList = new ArrayList<>();
     private EditText inputText;
-    private Button send;
+    private Button send,voice;
     private RecyclerView recyclerView;
     private MsgAdapter adapter;
     private boolean Send = true;
@@ -29,15 +29,33 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initMsgs();
+        voice = (Button) findViewById(R.id.voice_button);
         inputText = (EditText) findViewById(R.id.input_text);
-        send = (Button) findViewById(R.id.send);
+        send = (Button) findViewById(R.id.send_button);
         recyclerView = (RecyclerView) findViewById(R.id.msg_recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
 
+        //------链表中都是Msg类（是每个重复的模块）
+        //------将链表装入Adapter中（Adapter是一个模块中的具体内容）
         adapter = new MsgAdapter(msgList);
         recyclerView.setAdapter(adapter);
 
+        voice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO 加入录音功能
+                    final RecordAudioDialogFragment fragment = RecordAudioDialogFragment.newInstance();
+                    fragment.show(getSupportFragmentManager(), RecordAudioDialogFragment.class.getSimpleName());
+                    fragment.setOnCancelListener(new RecordAudioDialogFragment.OnAudioCancelListener() {
+                        @Override
+                        public void onCancel() {
+                            fragment.dismiss();
+                        }
+                    });
+
+            }
+        });
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
 //                    }
 //                    Send = !Send;
 
-                   msgList.add(msg);
+                    msgList.add(msg);
                     adapter.notifyItemInserted(msgList.size() - 1);
                     recyclerView.scrollToPosition(msgList.size() - 1);
                     inputText.setText("");

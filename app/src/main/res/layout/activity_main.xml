@@ -18,7 +18,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <Button
+            android:id="@+id/voice_button"
+            android:layout_width="66dp"
+            android:layout_height="48dp"
+            android:drawableBottom="@drawable/ic_baseline_keyboard_voice_24"
+            android:textAllCaps="false"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textColor="#FFFFFF" />
+
         <EditText
+
             android:id="@+id/input_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -27,10 +38,10 @@
             android:maxLines="2" />
 
         <Button
-            android:id="@+id/send"
+            android:id="@+id/send_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Send" />
+            android:text="发送" />
     </LinearLayout>
 
 
