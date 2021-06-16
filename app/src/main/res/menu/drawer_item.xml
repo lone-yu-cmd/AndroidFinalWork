@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="颜值测评"
+        android:id="@+id/face_test"
+        android:icon="@drawable/ic_baseline_music_note_24"/>
+    <item android:title="情感分析"
+        android:id="@+id/emotion_test"
+        android:icon="@drawable/ic_baseline_personal_video_24"/>
+</menu>

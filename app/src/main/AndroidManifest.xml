@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.androidfinalwork">
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -22,15 +23,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidFinalWork"
         android:usesCleartextTraffic="true">
+        <activity android:name=".Activity.EmotiontestActivity"></activity>
+        <activity android:name=".Activity.FacetestActivity" />
+
         <service
             android:name=".RecordingService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
 
         <activity
             android:name=".Activity.Score"
-            android:theme="@style/XUI"></activity>
-        <activity android:name=".MainActivity">
+            android:theme="@style/XUI" />
+        <activity android:name=".Activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
