@@ -45,14 +45,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //TODO 加入录音功能
-                    final RecordAudioDialogFragment fragment = RecordAudioDialogFragment.newInstance();
-                    fragment.show(getSupportFragmentManager(), RecordAudioDialogFragment.class.getSimpleName());
-                    fragment.setOnCancelListener(new RecordAudioDialogFragment.OnAudioCancelListener() {
-                        @Override
-                        public void onCancel() {
-                            fragment.dismiss();
-                        }
-                    });
+                final RecordAudioDialogFragment fragment = RecordAudioDialogFragment.newInstance();
+                fragment.show(getSupportFragmentManager(), RecordAudioDialogFragment.class.getSimpleName());
+                fragment.setOnCancelListener(new RecordAudioDialogFragment.OnAudioCancelListener() {
+                    @Override
+                    public void onCancel() {
+                        fragment.dismiss();
+                    }
+                });
 
             }
         });

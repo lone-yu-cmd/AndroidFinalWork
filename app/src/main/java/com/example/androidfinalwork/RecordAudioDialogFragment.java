@@ -70,8 +70,9 @@ public class RecordAudioDialogFragment extends DialogFragment {
     private ServiceConnection serviceConnection = new ServiceConnection() {
         //        连接时候启动的方法
         @Override
+        //这里返回的是 Service中的onBind方法
         public void onServiceConnected(ComponentName name, IBinder service) {
-//            连接服务时候就会生命localBinder
+        //        连接服务时候就会生命localBinder
             localBinder = (RecordingService.LocalBinder) service;
             System.out.println("declare service-------------------------------------------------");
             isConnected = true;
@@ -146,8 +147,6 @@ public class RecordAudioDialogFragment extends DialogFragment {
     //开始录音
     private void onRecord(boolean start) {
         Intent intent = new Intent(this.getActivity(), RecordingService.class);
-
-
         if (start) {
             // start recording
             mFabRecord.setImageResource(R.drawable.ic_media_stop);
@@ -162,13 +161,13 @@ public class RecordAudioDialogFragment extends DialogFragment {
             //start Chronometer
             mChronometerTime.setBase(SystemClock.elapsedRealtime());
             mChronometerTime.start();
-
             //start RecordingService 启动服务
             getActivity().startService(intent);
             //绑定该类和服务之间的关系
             //TODO 不走这一步！
             getActivity().getApplicationContext().bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
             //keep screen on while recording
+            Log.d("mainactivity》》","启动服务"+getActivity().bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE));
             //启动服务
             localBinder.startRecording();
 //            getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
