@@ -33,6 +33,13 @@ dependencies {
     implementation 'com.github.xuexiangjys:XUI:1.1.7'
     implementation 'com.alibaba:fastjson:1.2.9'
 
+//-----------------导航栏包
+
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
+    implementation 'androidx.navigation:navigation-fragment:2.3.5'
+    implementation 'androidx.navigation:navigation-ui:2.3.5'
+
 //    录音导入的包-------------------------------
     implementation 'com.melnykov:floatingactionbutton:1.3.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'

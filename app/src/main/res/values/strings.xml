@@ -2,6 +2,11 @@
     <!-- About -->
     <string name="link">Website: github.com/dkim0419/SoundRecorder</string>
 
+
+    <!--导航栏-->
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
     <!-- Toolbar -->
     <string name="app_name">FinalWork</string>
     <string name="action_licenses">Licenses</string>
