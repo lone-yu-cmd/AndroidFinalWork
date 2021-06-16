@@ -164,7 +164,7 @@ public class RecordAudioDialogFragment extends DialogFragment {
             //start RecordingService 启动服务
             getActivity().startService(intent);
             //绑定该类和服务之间的关系
-            //TODO 不走这一步！
+            //TODO 不走这一步！ 
             boolean serviceState=getActivity().getApplicationContext().bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
             if (serviceState){
                 System.out.println("Suceess");
