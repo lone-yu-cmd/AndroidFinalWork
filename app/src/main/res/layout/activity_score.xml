@@ -8,12 +8,11 @@
 
     <Button
         android:id="@+id/fromAlbum"
-        style="@style/Button.Blue"
         android:layout_width="164dp"
         android:layout_height="48dp"
         android:drawableLeft="@drawable/ic_baseline_photo_album_24"
         android:text="From Album"
-        android:textSize="18sp"
+        android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -22,12 +21,12 @@
 
     <Button
         android:id="@+id/takePhoto"
-        style="@style/Button.Blue"
         android:layout_width="164dp"
         android:layout_height="48dp"
         android:drawableLeft="@drawable/ic_baseline_camera_alt_24"
         android:text="Take Photo"
-        android:textSize="18sp"
+        android:textSize="12sp"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/fromAlbum"
         app:layout_constraintHorizontal_bias="0.5"
@@ -52,7 +51,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="52dp"
         android:text="得分："
-        android:textColor="@color/xui_btn_blue_normal_color"
+        android:textColor="#03A9F4"
         android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@+id/remark"
         app:layout_constraintEnd_toEndOf="parent"

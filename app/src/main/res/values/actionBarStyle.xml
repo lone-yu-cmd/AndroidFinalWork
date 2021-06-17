@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="actionBarTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <!--标题栏（actionBar）颜色-->
+        <item name="colorPrimary">#03A9F4</item>
+        <!--状态栏颜色-->
+<!--        <item name="colorPrimaryDark">#57faff</item>-->
+        <item name="colorAccent">@color/black</item>
+    </style>
+</resources>
